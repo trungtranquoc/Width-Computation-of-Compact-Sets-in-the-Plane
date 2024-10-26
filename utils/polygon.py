@@ -8,7 +8,7 @@ class Polygon:
         """
         Add the to the end of the list if the added point is not coincide with the last point
         """
-        last_points = self.points[-1]
+        last_points = self.points[len(self.points) - 1]
 
         if not check_coincide(p, last_points):
             self.points.append(p)
@@ -20,6 +20,15 @@ class Polygon:
         point = self.points.pop()
 
         return point
+
+    def update_by_idx(self, starting_idx: int, wise: bool):
+        size = len(self.points)
+        if wise:
+            new_points = [self.points[(starting_idx+i) % size] for i in range(size)]
+        else:
+            new_points = [self.points[(starting_idx-i) % size] for i in range(size)]
+
+        self.points = new_points
 
     def __len__(self):
         return len(self.points)

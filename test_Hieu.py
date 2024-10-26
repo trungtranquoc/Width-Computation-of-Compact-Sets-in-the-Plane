@@ -1,30 +1,8 @@
-from typing import Tuple, List, Annotated
-import numpy as np
+from utils import *
 
-# Define the error
-error_delta = 0.0000005
-
-# Define basic structure
-Point = Tuple[float, float]
-Angle = Annotated[float, "range: 0 <= value < 2pi"] | None
-
-def get_angle(p: Point, p1: Point, p2: Point) -> Angle:
-    """
-    Return the angle between two vector, pp1 and pp2
-    """
-    pp1_vector = p1[0] - p[0], p1[1] - p[1]
-    pp2_vector = p2[0] - p[0], p2[1] - p[1]
-
-    pp1_distance = np.linalg.norm(pp1_vector)
-    pp2_distance = np.linalg.norm(pp2_vector)
-
-    if np.abs(pp1_distance) <= error_delta or np.abs(pp2_distance) <= error_delta:
-        return None
-
-    theta = np.arccos(np.dot(pp1_vector, pp2_vector) / (pp1_distance * pp2_distance))
-    cross_product = pp1_vector[0]*pp2_vector[1] - pp1_vector[1]*pp2_vector[0]
-
-    if cross_product < 0:
-        return 2 * np.pi - theta
-
-    return theta
+if __name__ == '__main__':
+    p = (3,2)
+    segment_A = Segment((1,1),(5,1))
+    segment_B = Segment((0,0), (2,2))
+    line_A = Line.from_segment(segment_A)
+    print("Point p2 in A such that pp2 || B:", segment_A.get_point_parallel(p, segment_B))

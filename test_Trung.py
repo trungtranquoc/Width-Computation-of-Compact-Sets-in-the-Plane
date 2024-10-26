@@ -1,10 +1,11 @@
-from utils import *
+from utils import  *
+from algorithms import *
 
 if __name__ == '__main__':
-    # segment_A = Segment((2, 1), (6, 1))
-    # ray = Ray((2, 4), (3, 3))
-    # point = ray.compute_intersection(segment_A)
-    segment_A = Segment((0, 0), (100, 100))
-    segment_B = Segment((0, 100), (100, 0))
-    point = segment_A.compute_intersection(segment_B)
-    print(point)
+    p = (2,3)
+    pol = [(0,0), (0,5), (6,3), (5,3), (4,2), (4,3), (3,3), (5,0)]
+    op_pol = [pol[len(pol)-idx-1] for idx in range(len(pol))]
+
+    vis_pol = construct_visibility_polygon(p, op_pol)
+
+    print(vis_pol)

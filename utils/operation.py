@@ -78,3 +78,15 @@ def solve_3rd_equations(a: float, b: float, c: float, d:float):
 
         return np.array([x1, x2, x3])           # Returning One Real Root and two Complex Roots as numpy array.
 
+# Safe compare functions
+def safe_le(a: float, b: float):
+    """
+    Compare less than or equal to operation within allowed error
+    """
+    return a <= b - error_delta
+
+def safe_eq(a: float, b: float):
+    """
+    Compare equal operation within allowed error
+    """
+    return abs(a - b) <= error_delta

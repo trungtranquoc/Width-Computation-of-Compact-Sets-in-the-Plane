@@ -5,7 +5,7 @@ from .operation import error_delta
 
 # Define basic structure
 Point = Tuple[float, float]
-Angle = Annotated[float, "range: 0 <= value < 2pi"] | None
+Angle = Annotated[float, "range: 0 <= value < 2pi"]
 
 # Operation on points
 def check_on_segment(p1: Point, p2: Point, p: Point) -> bool:
@@ -13,7 +13,6 @@ def check_on_segment(p1: Point, p2: Point, p: Point) -> bool:
     Check if the point p lies in the axis-aligned segment with endpoints p1, p2
     """
     return np.abs(get_distance(p1,p) + get_distance(p2,p) - get_distance(p1,p2)) <= error_delta
-
 
 def get_distance(p1: Point, p2: Point) -> float:
     """
