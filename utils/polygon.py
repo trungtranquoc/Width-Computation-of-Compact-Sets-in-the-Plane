@@ -5,5 +5,34 @@ class Polygon:
         self.points = points
 
     def append(self, p: Point):
-        length = len(self.points)
-        if 
+        """
+        Add the to the end of the list if the added point is not coincide with the last point
+        """
+        last_points = self.points[-1]
+
+        if not check_coincide(p, last_points):
+            self.points.append(p)
+
+    def pop(self) -> Point:
+        """
+        Pop and return the last point of the list
+        """
+        point = self.points.pop()
+
+        return point
+
+    def __len__(self):
+        return len(self.points)
+
+    def __getitem__(self, item):
+        item = item % len(self.points)
+        return self.points[item]
+
+    def __iter__(self):
+        if self.points == []:
+            return iter(self.points)
+
+        return iter(self.points + [self.points[0]])
+
+    def __str__(self):
+        return f"Polygon with length: {len(self.points)} and points: {self.points}"
