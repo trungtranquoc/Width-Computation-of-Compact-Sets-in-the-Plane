@@ -8,9 +8,9 @@ class Polygon:
         """
         Add the to the end of the list if the added point is not coincide with the last point
         """
-        last_points = self.points[len(self.points) - 1]
+        last_points = self.top()
 
-        if not check_coincide(p, last_points):
+        if (last_points is not None) and not check_coincide(p, last_points):
             self.points.append(p)
 
     def pop(self) -> Point:
@@ -30,6 +30,11 @@ class Polygon:
 
         self.points = new_points
 
+    def top(self):
+        if self.points == 0:
+            return None
+        return self.points[len(self.points) - 1]
+
     def __len__(self):
         return len(self.points)
 
@@ -38,10 +43,7 @@ class Polygon:
         return self.points[item]
 
     def __iter__(self):
-        if self.points == []:
-            return iter(self.points)
-
-        return iter(self.points + [self.points[0]])
+        return iter(self.points)
 
     def __str__(self):
-        return f"Polygon with length: {len(self.points)} and points: {self.points}"
+        return f"Polygon with length {len(self.points)} and points: {self.points}"
