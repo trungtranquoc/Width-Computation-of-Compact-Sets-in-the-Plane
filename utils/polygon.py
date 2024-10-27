@@ -31,7 +31,7 @@ class Polygon:
         self.points = new_points
 
     def top(self):
-        if self.points == 0:
+        if len(self.points) == 0:
             return None
         return self.points[len(self.points) - 1]
 
