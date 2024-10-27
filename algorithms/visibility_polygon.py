@@ -35,7 +35,7 @@ def construct_visibility_polygon(p: Point, pol: List[Point]) -> Polygon:
             min_distance = distance
             starting_idx, init_point = idx, intersection
 
-    wise_angle = referenced_ray.get_angle(Segment(pol[starting_idx], pol[starting_idx+1]))
+    wise_angle = Segment.get_angle(referenced_ray, Segment(pol[starting_idx], pol[starting_idx + 1]))
     pol.update_by_idx(starting_idx, safe_le(wise_angle, math.pi))
 
     # Stage 2: Build visibility set
