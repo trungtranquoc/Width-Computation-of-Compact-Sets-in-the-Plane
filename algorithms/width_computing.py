@@ -1,5 +1,3 @@
-from sysconfig import get_default_scheme
-
 from utils import *
 import numpy as np
 from typing import  Union, List, Tuple
