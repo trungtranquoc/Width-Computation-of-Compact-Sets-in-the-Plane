@@ -83,7 +83,7 @@ def safe_le(a: float, b: float):
     """
     Compare less than or equal to operation within allowed error
     """
-    return a <= b - error_delta
+    return a <= b + error_delta
 
 def safe_eq(a: float, b: float):
     """
