@@ -1,5 +1,4 @@
 import numpy as np
-
 from .point import *
 from typing import Tuple, Union
 from .operation import error_delta
@@ -76,7 +75,9 @@ class LinearElement:
         if np.abs(v1_distance) <= error_delta or np.abs(v2_distance) <= error_delta:
             return None
 
-        theta = np.arccos(np.dot(v1, v2) / (v1_distance * v2_distance))
+        arccos = round(np.dot(v1, v2) / (v1_distance * v2_distance), 5)
+
+        theta = np.arccos(arccos)
         cross_product = v1[0] * v2[1] - v1[1] * v2[0]
 
         if cross_product < 0:

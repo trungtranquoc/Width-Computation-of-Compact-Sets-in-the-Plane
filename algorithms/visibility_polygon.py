@@ -48,7 +48,7 @@ def construct_visibility_polygon(p: Point, pol: List[Point]) -> Polygon:
     while idx < len(pol):
         last = visibility_polygon.top()
         current = pol[idx]
-        print(f"Loop {idx}: {current}, max_angle = {max_angle} and visibility polygon: {visibility_polygon}")
+        # print(f"Loop {idx}: {current}, max_angle = {max_angle} and visibility polygon: {visibility_polygon}")
 
         # last and current coincide => skip
         if check_coincide(last, current):
@@ -96,13 +96,10 @@ def construct_visibility_polygon(p: Point, pol: List[Point]) -> Polygon:
                         visibility_polygon.pop()
 
                         is_cutting_window = current_edge.compute_intersection(visibility_polygon.top_edge()) is not None
-                        print(f"first_ray = {first_ray} and second_ray = {Ray(p, visibility_polygon.top())}")
                         max_angle -= LinearElement.get_angle(Ray(p, visibility_polygon.top()), first_ray)
 
                     # Case 1.2.2.1
                     if not is_cutting_window:
-                        # print(f"visibility polygon: {visibility_polygon} and max_angle: {max_angle}")
-                        # print(f"Removed edge: {removed_edge} and current_ray: {current_ray} and current angle: {current_angle}")
                         intersection =  current_ray.compute_intersection(removed_edge)
                         max_angle += LinearElement.get_angle(Ray(p, visibility_polygon.top()), Ray(p, current))
 
