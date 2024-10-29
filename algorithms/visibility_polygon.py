@@ -1,6 +1,15 @@
 import math
 from typing import List
 from utils import *
+from typing import *
+import matplotlib.pyplot as plt
+
+def plot_polygon(pol: Union[Polygon, List[Point]], color: str, line_width: float = 1):
+    draw_pol = pol
+    # draw_pol.append(draw_pol[0])
+    x, y = zip(*draw_pol)
+
+    plt.plot(x, y, color=color, linewidth=line_width)
 
 def construct_visibility_polygon(p: Point, pol: List[Point]) -> Polygon:
     """
@@ -37,35 +46,37 @@ def construct_visibility_polygon(p: Point, pol: List[Point]) -> Polygon:
     def reference_angle(p1: Point) -> Angle:
         return LinearElement.get_angle(referenced_ray, Ray(p, p1))
 
-    visibility_polygon = Polygon()
+    visibility_polygon = VisibilityPolygon(p)
     visibility_polygon.append(init_point)     # append the zero-radian point
     idx = 0
 
     # Control variables
     visible_window = None
-    max_angle = 0
+
+    # Variable to back tracking in case 1.2.1
+    list_of_window = None
 
     while idx < len(pol):
         last = visibility_polygon.top()
         current = pol[idx]
-        # print(f"Loop {idx}: {current}, max_angle = {max_angle} and visibility polygon: {visibility_polygon}")
 
         # last and current coincide => skip
         if check_coincide(last, current):
             idx += 1
             continue
 
+        # Assign the current value
+        current_angle = reference_angle(current)
+        current_edge = Segment(last, current)
+        current_ray = Ray(p, current)
+
         if visible_window is None:
             angle_diff = LinearElement.get_angle(Ray(p, last), Ray(p, current))
-            current_angle = reference_angle(current)
-            current_edge = Segment(last, current)
-            current_ray = Ray(p, current)
 
             # Case 1.1: The considering edge is counterclockwise
             if safe_le(angle_diff, math.pi):
                 # Case 1.1.1
-                if safe_le(max_angle, current_angle) or safe_eq(current_angle, 0):
-                    max_angle += angle_diff
+                if safe_le(visibility_polygon.max_angle, current_angle) or safe_eq(current_angle, 0):
                     visibility_polygon.append(current)
                 # Case 1.1.2
                 else:
@@ -73,7 +84,6 @@ def construct_visibility_polygon(p: Point, pol: List[Point]) -> Polygon:
                     if intersection is None:
                         raise TypeError("The intersection in case 1.1.2 return None")
 
-                    max_angle = 2*math.pi
                     visibility_polygon.append(intersection)
                     visible_window = Segment(p, intersection)               # set is_visible to True
 
@@ -83,25 +93,46 @@ def construct_visibility_polygon(p: Point, pol: List[Point]) -> Polygon:
 
                 # Case 1.2.1
                 if vis_len < 2 or LinearElement.get_angle(visibility_polygon.top_edge(), current_edge) > math.pi:
-                    visible_window = Ray(p, last)                           # set is_visible to True
+                    visible_window = Ray(p, last)                               # set is_visible to True
+                    list_of_window = visibility_polygon.list_windows
+
+                    if list_of_window:
+                        _, last_window = list_of_window[0]
+                        intersection = last_window.compute_intersection(Segment(last, current))
+                        while safe_le(reference_angle(current), reference_angle(list_of_window[0][1][0])) and intersection is None:
+                            list_of_window = list_of_window[1:]  # pop the first window
+                            if not list_of_window:
+                                break
+                            intersection = list_of_window[0][1].compute_intersection(Segment(last, current))
+
+                        if intersection is not None:
+                            lw_idx, last_window = list_of_window[0]
+                            while len(visibility_polygon) > lw_idx:
+                                visibility_polygon.pop()
+
+                            visibility_polygon.append(intersection)
+                            visible_window, list_of_window = None, None
+                            idx -= 1
+
+                    # print(f"lw_idx: {lw_idx} and last_window: {last_window} and current: {current}")
 
                 # Case 1.2.2
                 else:
                     is_cutting_window = False
                     removed_edge = None
 
-                    while max_angle > current_angle and not is_cutting_window:
+                    while visibility_polygon.max_angle > current_angle and not is_cutting_window:
                         removed_edge = visibility_polygon.top_edge()
-                        first_ray = Ray(p, visibility_polygon.top())
                         visibility_polygon.pop()
-
+                        # Check whether the current_edge cut the window
                         is_cutting_window = current_edge.compute_intersection(visibility_polygon.top_edge()) is not None
-                        max_angle -= LinearElement.get_angle(Ray(p, visibility_polygon.top()), first_ray)
 
                     # Case 1.2.2.1
                     if not is_cutting_window:
                         intersection =  current_ray.compute_intersection(removed_edge)
-                        max_angle += LinearElement.get_angle(Ray(p, visibility_polygon.top()), Ray(p, current))
+
+                        if intersection is None:
+                            raise TypeError(f"The intersection of ray {current_ray} and edge {removed_edge} is None")
 
                         visibility_polygon.append(intersection)
                         visibility_polygon.append(current)
@@ -134,8 +165,37 @@ def construct_visibility_polygon(p: Point, pol: List[Point]) -> Polygon:
             intersection = visible_window.compute_intersection(Segment(prev, current))
             if intersection is not None:
                 visibility_polygon.append(intersection)
-                visible_window = None                                       # set is_visible to False
-                idx -= 1                            # No increase idx
+                visible_window, list_of_window = None, None            # set is_visible to False
+                idx -= 1
+
+            if list_of_window:
+                intersection = list_of_window[0][1].compute_intersection(Segment(prev, current))
+                while (safe_le(reference_angle(current), reference_angle(list_of_window[0][1][0]))
+                       and intersection is None):
+                    list_of_window = list_of_window[1:]             # pop the first window
+                    if not list_of_window:
+                        break
+                    intersection = list_of_window[0][1].compute_intersection(Segment(prev, current))
+
+                if intersection is not None:
+                    lw_idx, last_window = list_of_window[0]
+                    while len(visibility_polygon) > lw_idx:
+                        visibility_polygon.pop()
+
+                    visibility_polygon.append(intersection)
+                    visible_window, list_of_window = None, None
+                    idx -= 1
+
+        # Mock test for drawing
+        # if idx % 1 == 0 and idx > 225:
+        #     plot_polygon(pol, color='red')
+        #     plot_polygon(visibility_polygon, 'blue', line_width=0.5)
+        #     plt.plot(p[0], p[1], marker='o')
+        #     plt.plot(current[0], current[1], marker='o', color='black')
+        #
+        #     plt.title(f"Iterative {idx}")
+        #
+        #     plt.show()
 
         # Move to the next iteration
         idx += 1
