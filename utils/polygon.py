@@ -1,10 +1,15 @@
-from . import Segment
+from .geometry_2d import Segment, Ray, LinearElement
 from .point import *
 from typing import Union
 
+referenced_ray = Ray((0,0), (1,0))
+
 class Polygon:
-    def __init__(self, points: List[Point] = []):
-        self.points = points
+    def __init__(self, points: List[Point] = None):
+        if points is None:
+            self.points = []
+        else:
+            self.points = points
 
     def append(self, p: Point):
         """
@@ -12,8 +17,11 @@ class Polygon:
         """
         last_points = self.top()
 
-        if (last_points is None) or not check_coincide(p, last_points):
-            self.points.append(p)
+        # Check for coincide with the last point in visibility set
+        if (last_points is not None) and check_coincide(p, last_points):
+            return
+
+        self.points.append(p)
 
     def pop(self):
         """
@@ -46,6 +54,12 @@ class Polygon:
             return None
         return Segment(self.points[len(self.points) - 2], self.points[len(self.points) - 1])
 
+    def copy(self):
+        """
+        Return a copy of the polygon
+        """
+        return Polygon(self.points)
+
     def is_empty(self):
         return self.points == []
 
@@ -61,3 +75,57 @@ class Polygon:
 
     def __str__(self):
         return f"Polygon with length {len(self.points)} and points: {self.points}"
+
+class VisibilityPolygon(Polygon):
+    def __init__(self, p: Point):
+        super().__init__([])
+        self.p = p
+        self.list_windows = []
+        self.max_angle = 0
+
+    def append(self, current: Point):
+        """
+        Add the to the end of the list if the added point is not coincide with the last point
+        """
+        last = self.top()
+
+        if last is not None:
+            # Check for coincide with the last point in visibility set
+            if check_coincide(current, last):
+                return
+
+            # Check if the last, second, current and p are on the straight line
+            max_ray = Ray(self.p, self.top())
+
+            if max_ray.check_lie_on(current):
+                # Check for straight line with the two last point
+                if len(self.points) >= 2:
+                    second = self.points[len(self.points) - 2]
+                    if max_ray.check_lie_on(second):
+                        self.pop()
+
+                # Add window
+                self.list_windows = [(self.__len__(), Segment(current, self.top()))] + self.list_windows
+            else:
+                # If no window, then update the max_angle
+                self.max_angle += LinearElement.get_angle(Ray(self.p, last), Ray(self.p, current))
+
+        self.points.append(current)
+
+    def pop(self):
+        first_ray = Ray(self.p, self.top())
+        self.points.pop()
+        second_ray = Ray(self.p, self.top())
+
+        # Update the max_angle
+        self.max_angle -= LinearElement.get_angle(second_ray, first_ray)
+
+        last_window = self.last_window()
+        # If we pop the last window, then pop it from the window
+        if last_window is not None and last_window[0] == self.__len__():
+            self.list_windows = self.list_windows[1:]
+
+    def last_window(self):
+        if self.list_windows:
+            return self.list_windows[0]
+        return None
