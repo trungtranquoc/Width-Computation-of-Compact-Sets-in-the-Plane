@@ -67,6 +67,8 @@ def construct_visibility_polygon(p: Point, pol: List[Point]) -> Polygon:
 
         # Assign the current value
         current_angle = reference_angle(current)
+        if safe_le(visibility_polygon.max_angle + math.pi, current_angle):  # Current angle is negative
+            current_angle -= 2*math.pi
         current_edge = Segment(last, current)
         current_ray = Ray(p, current)
 
@@ -76,7 +78,7 @@ def construct_visibility_polygon(p: Point, pol: List[Point]) -> Polygon:
             # Case 1.1: The considering edge is counterclockwise
             if safe_le(angle_diff, math.pi):
                 # Case 1.1.1
-                if safe_le(visibility_polygon.max_angle, current_angle) or safe_eq(current_angle, 0):
+                if (safe_le(visibility_polygon.max_angle, current_angle) or (safe_eq(current_angle, 0))):
                     visibility_polygon.append(current)
                 # Case 1.1.2
                 else:
@@ -84,7 +86,12 @@ def construct_visibility_polygon(p: Point, pol: List[Point]) -> Polygon:
                     if intersection is None:
                         raise TypeError("The intersection in case 1.1.2 return None")
 
+                    if Segment(p, last).check_lie_on(intersection):
+                        intersection = last
+                    if Segment(p, visibility_polygon.second()).check_lie_on(intersection):
+                        intersection = visibility_polygon.second()
                     visibility_polygon.append(intersection)
+
                     visible_window = Segment(p, intersection)               # set is_visible to True
 
             # Case 1.2: The considering edge is clockwise
@@ -96,8 +103,13 @@ def construct_visibility_polygon(p: Point, pol: List[Point]) -> Polygon:
                     visible_window = Ray(p, last)                               # set is_visible to True
                     list_of_window = visibility_polygon.list_windows
 
+                    # If last window is the top edge in the visibility set, then continue
+                    if list_of_window and check_coincide(visibility_polygon.top(), list_of_window[0][1][0]):
+                        list_of_window = list_of_window[1:]
+
                     if list_of_window:
                         _, last_window = list_of_window[0]
+
                         intersection = last_window.compute_intersection(Segment(last, current))
                         while safe_le(reference_angle(current), reference_angle(list_of_window[0][1][0])) and intersection is None:
                             list_of_window = list_of_window[1:]  # pop the first window
@@ -112,9 +124,8 @@ def construct_visibility_polygon(p: Point, pol: List[Point]) -> Polygon:
 
                             visibility_polygon.append(intersection)
                             visible_window, list_of_window = None, None
-                            idx -= 1
 
-                    # print(f"lw_idx: {lw_idx} and last_window: {last_window} and current: {current}")
+                            idx -= 1
 
                 # Case 1.2.2
                 else:
@@ -125,7 +136,8 @@ def construct_visibility_polygon(p: Point, pol: List[Point]) -> Polygon:
                         removed_edge = visibility_polygon.top_edge()
                         visibility_polygon.pop()
                         # Check whether the current_edge cut the window
-                        is_cutting_window = current_edge.compute_intersection(visibility_polygon.top_edge()) is not None
+                        if visibility_polygon.top_edge() is not None:
+                            is_cutting_window = current_edge.compute_intersection(visibility_polygon.top_edge()) is not None
 
                     # Case 1.2.2.1
                     if not is_cutting_window:
@@ -158,7 +170,6 @@ def construct_visibility_polygon(p: Point, pol: List[Point]) -> Polygon:
                             intersection = current_edge.compute_intersection(cutting_window)
                             visible_window = Segment(visibility_polygon.top(), intersection)
 
-
         # Case 2: is_visible = False
         else:
             prev = pol[idx-1]
@@ -187,7 +198,7 @@ def construct_visibility_polygon(p: Point, pol: List[Point]) -> Polygon:
                     idx -= 1
 
         # Mock test for drawing
-        # if idx % 1 == 0 and idx > 225:
+        # if idx % 1 == 0 and idx > 12:
         #     plot_polygon(pol, color='red')
         #     plot_polygon(visibility_polygon, 'blue', line_width=0.5)
         #     plt.plot(p[0], p[1], marker='o')

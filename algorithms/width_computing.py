@@ -5,7 +5,7 @@ from utils import *
 import numpy as np
 from typing import  Union, List, Tuple
 
-def _get_endpoints_intersection(p: Point, edge_1: Segment, edge_2: Segment) -> Union[List[Segment], None]:
+def _get_endpoints_intersection(p: Point, edge_1: Segment, edge_2: Segment) -> List[Segment]:
     """
     Get the list of valid connected paths from each end-points
     """
@@ -25,9 +25,8 @@ def _get_endpoints_intersection(p: Point, edge_1: Segment, edge_2: Segment) -> U
 
         if intersected_point is not None:
             intersected_pairs.append(Segment(point, intersected_point))
-
-    if len(intersected_pairs) == 0:
-        return None
+    # if len(intersected_pairs) == 0:
+    #     return None
 
     return intersected_pairs
 

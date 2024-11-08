@@ -15,7 +15,7 @@ def plot_polygon(pol: Union[Polygon, List[Point]], color: str, line_width: float
 def plot_width_of_polygon(p: Point, pol: Polygon, vis_pol: VisibilityPolygon, join_segments: List[Segment]):
     plot_polygon(pol, color='red')
     plot_polygon(vis_pol, 'blue', line_width=0.5)
-    plt.plot(p[0], p[1], marker='o', color='black')
+    plt.plot(p[0], p[1], marker='o', markersize=2, color='black')
 
     for segment in join_segments:
         x_value = segment[0][0], segment[1][0]

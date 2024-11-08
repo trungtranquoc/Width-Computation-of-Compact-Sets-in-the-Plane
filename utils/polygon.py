@@ -1,3 +1,5 @@
+from shapely.lib import points
+
 from .geometry_2d import Segment, Ray, LinearElement
 from .point import *
 from typing import Union
@@ -46,13 +48,21 @@ class Polygon:
             return None
         return self.points[len(self.points) - 1]
 
+    def second(self) -> Union[Point, None]:
+        """
+        Return the second last point of the set
+        """
+        if len(self.points) < 2:
+            return None
+        return self.points[len(self.points) - 2]
+
     def top_edge(self) -> Union[Segment, None]:
         """
         Return the last edge of the set
         """
-        if (len(self.points) == 0) or (len(self.points) == 1):
+        if len(self.points) < 2:
             return None
-        return Segment(self.points[len(self.points) - 2], self.points[len(self.points) - 1])
+        return Segment(self.second(), self.top())
 
     def copy(self):
         """
@@ -129,3 +139,9 @@ class VisibilityPolygon(Polygon):
         if self.list_windows:
             return self.list_windows[0]
         return None
+
+    def check_last_edge_is_window(self):
+        if not self.list_windows or len(self.points) < 2:
+            return False
+        else:
+            return self.last_window()[0] == len(self.points)

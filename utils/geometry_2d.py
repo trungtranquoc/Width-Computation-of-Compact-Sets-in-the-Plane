@@ -1,7 +1,7 @@
 import numpy as np
 from .point import *
 from typing import Tuple, Union
-from .operation import error_delta, safe_eq
+from .operation import error_delta, safe_eq, safe_le
 from abc import abstractmethod
 
 class LinearElement:
@@ -144,7 +144,7 @@ class Segment(LinearElement):
         # compute the denominator of the parametric equations
         denom = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4)
 
-        if np.abs(denom) <= error_delta:
+        if safe_eq(denom, 0):
             return None
 
         # compute the numerators for the parametric equation
@@ -179,7 +179,7 @@ class Ray(LinearElement):
         # compute the denominator of the parametric equations
         denom = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4)
 
-        if np.abs(denom) <= error_delta:
+        if safe_eq(denom, 0):
             return None
 
         # compute the numerators for the parametric equation
@@ -191,7 +191,7 @@ class Ray(LinearElement):
 
         # Calculate the intersection point
         # check if the intersection placed on rays or not
-        if 0 <= t and 0 <= u:
+        if safe_le(0, t) and safe_le(0, u):
             intersect_x = x1 + t * (x2 - x1)
             intersect_y = y1 + t * (y2 - y1)
             return intersect_x, intersect_y
@@ -207,7 +207,7 @@ class Ray(LinearElement):
         # compute the denominator of the parametric equations
         denom = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4)
 
-        if np.abs(denom) <= error_delta:
+        if safe_eq(denom, 0):
             return None
 
         # compute the numerators for the parametric equation
@@ -219,7 +219,7 @@ class Ray(LinearElement):
 
         # Calculate the intersection point
         # check if the intersection placed on rays or not
-        if 0 <= t and 0 <= u <= 1:
+        if safe_le(0, t) and safe_le(0, u) and safe_le(u, 1):
             intersect_x = x1 + t * (x2 - x1)
             intersect_y = y1 + t * (y2 - y1)
             intersect_x_2 = x3 + u * (x4 - x3)
@@ -254,7 +254,7 @@ class Line(LinearElement):
         # compute the denominator of the parametric equations
         denom = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4)
 
-        if np.abs(denom) <= error_delta:
+        if safe_eq(denom, 0):
             return None
 
         # compute the numerators for the parametric equation
