@@ -18,16 +18,8 @@ class LinearElement:
 
     @abstractmethod
     def __str__(self):
+        return f'point_1: {self.point_1} \tpoint_2: {self.point_2}'
         pass
-
-    # def is_parallel(self, other: "LinearElement") -> bool:
-    #     """
-    #     Check whether two linear element is parallel
-    #     """
-    #     vector_1 = self._vector()
-    #     vector_2 = other._vector()
-    #
-    #     return np.abs(vector_1[0]*vector_2[1] - vector_1[1]*vector_2[0]) <= error_delta
 
     def get_projection(self, p: Point) -> Point:
         """
@@ -84,32 +76,11 @@ class LinearElement:
         cross_product = v1[0] * v2[1] - v1[1] * v2[0]
         if safe_eq(cross_product, 0):
             cross_product = 0
-        # print(f"theta: {theta} and cross_product: {cross_product}")
 
         if cross_product < 0:
             return 2 * np.pi - theta
 
         return theta
-
-    # def get_angle(self, other: "LinearElement") -> Union[Angle, None]:
-    #     """
-    #     Get the angle between two shape 2D
-    #     """
-        # v1 = self._vector()
-        # v2 = other._vector()
-        #
-        # v1_distance, v2_distance = np.linalg.norm(v1), np.linalg.norm(v2)
-        #
-        # if np.abs(v1_distance) <= error_delta or np.abs(v2_distance) <= error_delta:
-        #     return None
-        #
-        # theta = np.arccos(np.dot(v1, v2) / (v1_distance * v2_distance))
-        # cross_product = v1[0]*v2[1] - v1[1]*v2[0]
-        #
-        # if cross_product < 0:
-        #     return 2 * np.pi - theta
-        #
-        # return theta
 
     def __getitem__(self, item: Union[int, Tuple[slice, int]]):
         if isinstance(item, int):
