@@ -21,10 +21,13 @@ def construct_visibility_polygon(p: Point, pol: List[Point]) -> Polygon:
     referenced_ray = Ray(p, (p[0]+1, p[1]))     # Reference ray
     starting_idx, init_point = None, None
 
-    for idx in range(len(pol)-1):
+    for idx in range(len(pol)):
         edge = Segment(pol[idx], pol[idx+1])
+
+        if edge.check_lie_on(p):
+            return Polygon()
+
         intersection = referenced_ray.compute_intersection(edge)
-        # If no intersection
         if intersection is None:            # No intersect
             continue
 
@@ -155,10 +158,10 @@ def construct_visibility_polygon(p: Point, pol: List[Point]) -> Polygon:
                         visibility_polygon.pop()
                         # Case 1.2.2.2.a
                         if cutting_window.check_lie_on(current):
-                            while check_coincide(current, pol[idx]):
+                            while check_coincide(current, pol[idx+1]):
                                 idx += 1
 
-                            next_edge_angle = LinearElement.get_angle(current_edge, Segment(pol[idx], current))
+                            next_edge_angle = LinearElement.get_angle(current_edge, Segment(pol[idx+1], current))
                             visible_angle = LinearElement.get_angle(current_edge, cutting_window)
 
                             if safe_le(next_edge_angle, visible_angle):
@@ -198,7 +201,7 @@ def construct_visibility_polygon(p: Point, pol: List[Point]) -> Polygon:
                     idx -= 1
 
         # Mock test for drawing
-        # if idx % 1 == 0 and idx > 12:
+        # if idx % 1 == 0 and idx > 14:
         #     plot_polygon(pol, color='red')
         #     plot_polygon(visibility_polygon, 'blue', line_width=0.5)
         #     plt.plot(p[0], p[1], marker='o')

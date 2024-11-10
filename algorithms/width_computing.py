@@ -79,6 +79,9 @@ def shortest_path_edge_pair(p: Point, edge_1: Segment, edge_2: Segment) -> Union
 def compute_width_of_polygon(p: Point, pol: List[Point]) -> Union[Tuple[List[Segment], float, Polygon], None]:
     vis_pol = construct_visibility_polygon(p, pol)
 
+    if not len(vis_pol):
+        return [Segment(p, p)], 0, vis_pol
+
     # Filter those edge that are not windows
     pair_edges = []
 
