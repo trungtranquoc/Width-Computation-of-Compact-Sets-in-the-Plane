@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import numpy as np
 
 from .polygon import Polygon, VisibilityPolygon
 from .point import Point
@@ -6,8 +7,9 @@ from .geometry_2d import Segment
 from typing import List, Union
 
 def plot_polygon(pol: Union[Polygon, List[Point]], color: str, line_width: float = 1):
-    draw_pol = pol
-    draw_pol.append(draw_pol[0])
+    draw_pol = np.append(pol, pol[0])
+    draw_pol = draw_pol.reshape((pol.shape[0]+1, 2))
+
     x, y = zip(*draw_pol)
 
     plt.plot(x, y, color=color, linewidth=line_width)
