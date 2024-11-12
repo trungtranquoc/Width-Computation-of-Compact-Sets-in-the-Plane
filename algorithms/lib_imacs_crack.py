@@ -75,11 +75,10 @@ class hh_width_point_approx(object):
         self.N = N
 
         angle_list = [2 * np.pi * i / 2 ** self.N for i in range(2 ** (self.N - 1) + 1)]
-        line_min, line_length_min = hh_get_segment_angle(self.p, self.points, angle_list[0])
+        segment_min, line_length_min = hh_get_segment_angle(self.p, self.points, angle_list[0])
 
         angle_list.pop(0)
         self.all = []
-        segment_min = None
         for theta in angle_list:
             line, line_length = hh_get_segment_angle(self.p, self.points, theta)
             if line==None:
