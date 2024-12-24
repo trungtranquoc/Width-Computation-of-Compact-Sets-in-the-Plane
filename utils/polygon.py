@@ -13,6 +13,9 @@ class Polygon:
         else:
             self.points = points
 
+    def get_points(self) -> List[Point]:
+        return self.points
+
     def append(self, p: Point):
         """
         Add the to the end of the list if the added point is not coincide with the last point

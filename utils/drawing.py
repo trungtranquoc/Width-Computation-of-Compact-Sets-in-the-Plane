@@ -15,7 +15,7 @@ def plot_polygon(pol: Union[Polygon, List[Point]], color: str, line_width: float
 
     x, y = zip(*draw_pol)
 
-    plt.plot(x, y, color=color, linewidth=line_width)
+    plt.plot(x, y, color=color, linewidth=line_width, label=label)
 
 def plot_width_of_polygon(p: Point, pol: Polygon, vis_pol: VisibilityPolygon, join_segments: List[Segment]):
     plot_polygon(pol, color='red')
