@@ -33,7 +33,7 @@ def read_image(img_path: str, idx_crack: int = 0) -> np.ndarray:
 
     return crack
 
-#Nhập thông tin
+# Main function
 if __name__ == '__main__':
     if len(sys.argv) >= 3:
         img_name, idx_crack = sys.argv[1], int(sys.argv[2])
@@ -42,6 +42,8 @@ if __name__ == '__main__':
     else:
         img_name, idx_crack = '1.jpg', 0
     path_import = "fig"
+
+    print(f"Read image {os.path.join(path_import, img_name)}, crack index: {idx_crack}")
 
     # Original image
     img_path = os.path.join(path_import, img_name)
@@ -92,12 +94,15 @@ if __name__ == '__main__':
             pass
 
     # Draw the new point
-    plot_polygon(pol, color="red")
-    plt.scatter(skeleton_set[:, 0], skeleton_set[:, 1], s=1, color='yellow')
+    plot_polygon(pol, color="red", title="original crack")
+    plt.scatter(skeleton_set[:, 0], skeleton_set[:, 1], s=1, color='yellow', label="skeleton")
     for segment in max_segments:
         x_value = segment[0][0], segment[1][0]
         y_value = segment[0][1], segment[1][1]
 
-        plt.plot(x_value, y_value, color='darkgreen', linewidth=1)
+        plt.plot(x_value, y_value, color='darkgreen', linewidth=1, label=f"width = {round(max_width, 4)}")
 
+    plt.legend(loc='best')
+
+    plt.imshow(original_image)
     plt.show()
