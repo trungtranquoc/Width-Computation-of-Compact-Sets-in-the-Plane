@@ -6,7 +6,7 @@ from .point import Point
 from .geometry_2d import Segment
 from typing import List, Union
 
-def plot_polygon(pol: Union[Polygon, List[Point]], color: str, line_width: float = 1):
+def plot_polygon(pol: Union[Polygon, List[Point]], color: str, line_width: float = 1, title=None):
     if isinstance(pol, List):
         pol = Polygon(pol)
         
@@ -15,7 +15,7 @@ def plot_polygon(pol: Union[Polygon, List[Point]], color: str, line_width: float
 
     x, y = zip(*draw_pol)
 
-    plt.plot(x, y, color=color, linewidth=line_width, label=label)
+    plt.plot(x, y, color=color, linewidth=line_width, label=title)
 
 def plot_width_of_polygon(p: Point, pol: Polygon, vis_pol: VisibilityPolygon, join_segments: List[Segment]):
     plot_polygon(pol, color='red')
