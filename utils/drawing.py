@@ -7,6 +7,9 @@ from .geometry_2d import Segment
 from typing import List, Union
 
 def plot_polygon(pol: Union[Polygon, List[Point]], color: str, line_width: float = 1):
+    if isinstance(pol, List):
+        pol = Polygon(pol)
+        
     draw_pol = np.append(pol, pol[0])
     draw_pol = draw_pol.reshape((pol.shape[0]+1, 2))
 

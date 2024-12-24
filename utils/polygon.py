@@ -72,6 +72,10 @@ class Polygon:
 
     def is_empty(self):
         return self.points == []
+    
+    @property
+    def shape(self):
+        return [len(self.points), 2]
 
     def __len__(self):
         return len(self.points)
