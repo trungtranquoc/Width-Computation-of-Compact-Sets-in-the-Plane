@@ -115,7 +115,7 @@ def compute_width_of_polygon(p: Point, pol: List[Point]) -> Union[Tuple[List[Seg
         nonlocal min_distance, join_segments
 
         distance, join_segment = shortest_path_edge_pair(p, pair_edges[i], pair_edges[j])
-        if safe_eq(distance, min_distance):
+        if safe_eq(distance, min_distance) and not (check_coincide(join_segment[0], join_segments[0][0]) or check_coincide(join_segment[0], join_segments[0][1])):
             join_segments.append(join_segment)
         elif distance < min_distance:
             min_distance, join_segments = distance, []
@@ -142,6 +142,5 @@ def compute_width_of_polygon(p: Point, pol: List[Point]) -> Union[Tuple[List[Seg
             i += 1
         else:
             j += 1
-
-    # print(f"join_segments: {[str(segment) for segment in join_segments]}")
+    
     return join_segments, min_distance, vis_pol

@@ -62,7 +62,7 @@ if __name__ == '__main__':
     max_p, max_segments = None, []
 
     for p in compute_set:
-        print(f"Process on point {p}")
+        # print(f"Process on point {p}")
         try:
             # Take the upper bound
             w_n = float('inf')
@@ -94,13 +94,15 @@ if __name__ == '__main__':
             pass
 
     # Draw the new point
+    plt.plot(max_p[0], max_p[1], marker='o', label="max_p")
     plot_polygon(pol, color="red", title="original crack")
     plt.scatter(skeleton_set[:, 0], skeleton_set[:, 1], s=1, color='yellow', label="skeleton")
+
     for segment in max_segments:
         x_value = segment[0][0], segment[1][0]
         y_value = segment[0][1], segment[1][1]
 
-        plt.plot(x_value, y_value, color='darkgreen', linewidth=1, label=f"width = {round(max_width, 4)}")
+        plt.plot(x_value, y_value, color='blue', linewidth=1, label=f"width = {round(max_width, 4)}")
 
     plt.legend(loc='best')
 
