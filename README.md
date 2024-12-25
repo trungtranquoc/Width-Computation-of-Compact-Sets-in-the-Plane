@@ -35,11 +35,12 @@ Main program will run from the scratch, from read the input image, extract the c
 
 To run the program, use command `python main.py [img_name] [crack_index]`. Where `[img-name]` is the file name of input image that placed in `fig` directory.
 
-<div style="text-align: center; ">
-    <img src="output/crack_02_accuracy.png" alt="crack_02_accuracy" width="60%">
+<div style="text-align: center; justify-content: start;">
+    <img src="fig/crack_02.jpg" alt="crack_02" width="40%">
+    <img src="output/crack_02_accuracy.png" alt="crack_02_accuracy" width="45%">
 </div>
 <div style="text-align: center; ">
-    <p><strong>Figure 2:</strong> Result after running command <strong>python .\main.py crack_02.jpg 0</strong>.</p>
+    <p><strong>Figure 2:</strong> (a) Input image at file <strong>crack_02.jpg</strong> (b) Result after running command <strong>python .\main.py crack_02.jpg 0</strong>.</p>
 </div>
 
 To run your interested input, you can paste your own input image into directory `fig` and execute the above command to compute the width of crack in your image.
@@ -48,3 +49,12 @@ To run your interested input, you can paste your own input image into directory 
 Also, we support programs that compute the width of polygon at a specific point. You can try them using either two commands:
 - `python width_at_point.py [input_path]` where `[input_path]` is the file name to your input of polygon $\mathcal{P}$ and point $p$. See the sample input file in there.
 - `python width_with_mouse_click.py [img_name] [crack_index]`: Similar to the mail file, where in this program, you can specify the coordinate of the point by clicking directly on the input image.
+
+<div style="text-align: center; justify-content: start;">
+    <img src="output/crack_03_(331.89, 272.94).png" alt="crack_03_(331.89, 272.94)" width="45%">
+    <img src="output/crack_03_(403.63, 242.58).png" alt="crack_03_(403.63, 242.58)" width="45%">
+    <img src="output/crack_03_(475.36, 140.59).png" alt="crack_03_(475.36, 140.59)" width="45%">
+</div>
+<div style="text-align: center; ">
+    <p><strong>Figure 3:</strong>Computing width at specified points in <strong>width_with_mouse_click.py</strong></p>
+</div>

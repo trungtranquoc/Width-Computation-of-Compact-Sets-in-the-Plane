@@ -38,7 +38,7 @@ def update_plot(p: Point):
         join_segments, width_of_pol, vis_pol = compute_width_of_polygon(p, pol)
         print(f"Width at {p}: {width_of_pol}")
 
-        plot_width_of_polygon(p, pol, vis_pol, join_segments)
+        plot_width_of_polygon(p, pol, vis_pol, join_segments, width_of_pol)
     except Exception as e:
         print(f"Error on point {p}: {e}")
         plot_polygon(pol, color="red")

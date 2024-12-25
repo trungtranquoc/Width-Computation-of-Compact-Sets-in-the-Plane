@@ -95,7 +95,7 @@ if __name__ == '__main__':
 
     # Draw the new point
     plt.plot(max_p[0], max_p[1], marker='o', label="max_p")
-    plot_polygon(pol, color="red", title="original crack")
+    plot_polygon(pol, color="red", title="Crack contour")
     plt.scatter(skeleton_set[:, 0], skeleton_set[:, 1], s=1, color='yellow', label="skeleton")
 
     for segment in max_segments:
