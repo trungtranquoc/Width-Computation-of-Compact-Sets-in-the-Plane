@@ -20,7 +20,8 @@ Tran Quoc Hieu<sup>[2,3]</sup>
 
 ### Abstract
 
-The width function for a compact subset $$ S \subset \mathbb{R}^n $$ at a point $$ p \in S $$, denoted by $$ W(S; p) $$, is defined as the infimum of the distances between two boundary points of $$ S $$ that contain $$ p $$.
+The width function for a compact subset `S \subset \mathbb{R}^n` at a point `p \in S`, denoted by `W(S; p)`, is defined as ...
+
 
 
 ## Implementation
