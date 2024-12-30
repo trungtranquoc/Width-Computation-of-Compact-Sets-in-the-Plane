@@ -1,3 +1,8 @@
+"""
+This code is copyrighted by Institute of Mathematical and Computational Sciences - IMACS,
+    Ho Chi Minh City University of Technology (HCMUT).
+Contact: Prof. Phan Thanh An thanhan@hcmut.edu.vn
+"""
 from utils import  *
 from algorithms import *
 from typing import List, Tuple
