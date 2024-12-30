@@ -1,8 +1,30 @@
 # Width Computation of Compact Sets in the Plane
-## About this project
-In this project, we implement a program to compute the width of crack in a given 2D crack image. The process include two steps:
-- Extract the crack contour from the image. We use **YOLO-v8** model to extract the contour.
-- Compute the width of the crack following the definition in [AnHaiWidthCompactSet2022](https://imacs.hcmut.edu.vn/prePrint/637656eabc980f2641531285_IMACS-2022-01-crack-width-20221119.pdf).
+
+### Authors
+
+Nguyen Hoang Hai<sup>[1,3]</sup>,  
+Phan Thanh An<sup>[1,3,<span style="font-family: FontAwesome;">&#xf0e0;</span>]</sup>,  
+Tran Quoc Trung<sup>[2,3]</sup>,  
+Tran Quoc Hieu<sup>[2,3]</sup>  
+
+---
+
+<sup>1</sup> Institute of Mathematical and Computational Sciences, Ho Chi Minh City University of Technology (HCMUT), 268 Ly Thuong Kiet Street, District 10, Ho Chi Minh City, Vietnam  
+<sup>2</sup> Faculty of Computer Science and Engineering, Ho Chi Minh City University of Technology (HCMUT), 268 Ly Thuong Kiet Street, District 10, Ho Chi Minh City, Vietnam  
+<sup>3</sup> Vietnam National University Ho Chi Minh City, Linh Trung Ward, Thu Duc City, Ho Chi Minh City, Vietnam  
+<span style="font-family: FontAwesome;">&#xf0e0;</span> Corresponding author: thanhan@hcmut.edu.vn  
+
+---
+
+### Abstract
+
+The width function for a compact subset \( S \subset \mathbb{R}^n \) at a point \( p \in S \), denoted by \( W(S; p) \), is defined as the infimum of the distances between two boundary points of \( S \) that contain \( p \). 
+
+In this article, we prove that the width of the set \( S \) at \( p \) is equal to the width of its visibility set at \( p \). Additionally, we introduce a linear algorithm to compute \( W(S; p) \) for \( p \in S \), where \( S \) is a polygon in the plane. Finally, the algorithm is implemented in Python to compute the width of polygons, and some real-world applications, namely, measuring the widths of cracks on the surfaces of some solids, are given.
+
+
+## Implementation
+we implement a program to compute the width of crack in a given 2D crack image. 
 
 <div style="text-align: center; ">
     <img src="fig/crack_06.jpg" alt="Screenshot" width="40%"/>
