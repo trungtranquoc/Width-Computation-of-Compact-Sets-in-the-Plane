@@ -18,13 +18,10 @@ Tran Quoc Hieu<sup>[2,3]</sup>
 
 ### Abstract
 
-The width function for a compact subset \( S \subset \mathbb{R}^n \) at a point \( p \in S \), denoted by \( W(S; p) \), is defined as the infimum of the distances between two boundary points of \( S \) that contain \( p \). 
-
-In this article, we prove that the width of the set \( S \) at \( p \) is equal to the width of its visibility set at \( p \). Additionally, we introduce a linear algorithm to compute \( W(S; p) \) for \( p \in S \), where \( S \) is a polygon in the plane. Finally, the algorithm is implemented in Python to compute the width of polygons, and some real-world applications, namely, measuring the widths of cracks on the surfaces of some solids, are given.
-
+The width function for a compact subset \( S \subset \mathbb{R}^n \) at a point \( p \in S \), denoted by \( W(S; p) \), is defined as the infimum of the distances between two boundary points of \( S \) that contain \( p \). In this article, we prove that the width of the set \( S \) at \( p \) is equal to the width of its visibility set at \( p \). Additionally, we introduce a linear algorithm to compute \( W(S; p) \) for \( p \in S \), where \( S \) is a polygon in the plane. Finally, the algorithm is implemented in Python to compute the width of polygons, and some real-world applications, namely, measuring the widths of cracks on the surfaces of some solids, are given.
 
 ## Implementation
-we implement a program to compute the width of crack in a given 2D crack image. 
+We implement a program to compute the width of crack in a given 2D crack image. 
 
 <div style="text-align: center; ">
     <img src="fig/crack_06.jpg" alt="Screenshot" width="40%"/>
