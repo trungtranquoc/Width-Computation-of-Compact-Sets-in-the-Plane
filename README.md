@@ -1,4 +1,4 @@
-# Width crack computation
+# Width Computation of Compact Sets in the Plane
 ## About this project
 In this project, we implement a program to compute the width of crack in a given 2D crack image. The process include two steps:
 - Extract the crack contour from the image. We use **YOLO-v8** model to extract the contour.
