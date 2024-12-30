@@ -31,19 +31,6 @@ We implement a program to compute the width of crack in a given 2D crack image.
     <p><strong>Figure 1:</strong> (a) Input image. (b) Computing width of the crack in the image.</p>
 </div>
 
-### Compute width at a point
-The main contribution in this project is implement an algorithm for computing width of crack at a point $p$, given it polygon representation of contour. We build a linear-time algorithm which following those steps:
-- Construct [Visibility polygon](https://en.wikipedia.org/wiki/Visibility_polygon) at point $p$. We implement a linear-time program for computing visibility polygon of simple polygon at a point (See `algorithms/visibility_polygon.py`).
-- Compute width of **Visibility polygon** at point $p$ by linearly iterating through all edges, following the counterclockwise direction.
-
-<div style="text-align: center; ">
-    <img src="fig/polygon_1.png" alt="Screenshot" width="45%"/>
-    <img src="output/polygon_1_width.png" alt="Screenshot" width="45%">
-</div>
-<div style="text-align: center; ">
-    <p><strong>Figure 2:</strong> (a) Input polygon. (b) Computing width of polygon at a point p.</p>
-</div>
-
 # How to run program 
 ## Download packages
 To make sure the code run with compatible version of packages, you need to download packages from `requirement.txt` file using command: `pip install -r requirements.txt`.
