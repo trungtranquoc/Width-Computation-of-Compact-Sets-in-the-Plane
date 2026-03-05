@@ -1,12 +1,13 @@
-# Width Computation of Compact Sets in the Plane
+# Efficient Algorithms for Computing the Width of Polygons in the Plane and some Engineering Applications
 
 ### Authors
 
 <div style="text-align: center;">
 Nguyen Hoang Hai<sup>[1,3]</sup>,  
-Phan Thanh An<sup>[1,3,<span style="font-family: FontAwesome;">&#xf0e0;</span>]</sup>,  
 Tran Quoc Trung<sup>[2,3]</sup>,  
-Tran Quoc Hieu<sup>[2,3]</sup>  
+Tran Quoc Hieu<sup>[2,3]</sup>
+Tran Anh Dung<sup>[1,3,<span style="font-family: FontAwesome;">&#xf0e0;</span>]</sup>,    
+Phan Thanh An<sup>[1,3]</sup>,    
 </div>
 
 ---
@@ -14,7 +15,7 @@ Tran Quoc Hieu<sup>[2,3]</sup>
 <sup>1</sup> Institute of Mathematical and Computational Sciences, Ho Chi Minh City University of Technology (HCMUT), 268 Ly Thuong Kiet Street, District 10, Ho Chi Minh City, Vietnam  
 <sup>2</sup> Faculty of Computer Science and Engineering, Ho Chi Minh City University of Technology (HCMUT), 268 Ly Thuong Kiet Street, District 10, Ho Chi Minh City, Vietnam  
 <sup>3</sup> Vietnam National University Ho Chi Minh City, Linh Trung Ward, Thu Duc City, Ho Chi Minh City, Vietnam  
-<span style="font-family: FontAwesome;">&#xf0e0;</span> Corresponding author: thanhan@hcmut.edu.vn  
+<span style="font-family: FontAwesome;">&#xf0e0;</span> Corresponding author: tadung.sdh231@hcmut.edu.vn  
 
 ---
 
